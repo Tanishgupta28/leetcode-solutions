@@ -10,35 +10,40 @@
  */
 class Solution {
 public:
+ListNode* reverseLink(ListNode* head){
+    ListNode* prev = NULL;
+    ListNode* nxt = NULL;
+    ListNode* curr = head;
+    while(curr!=NULL){
+        nxt = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = nxt;
+    }
+    return prev;
+}
     void reorderList(ListNode* head) {
         ListNode* slow = head;
         ListNode* fast = head;
-        while(fast!=NULL && fast->next!=NULL){
-            fast = fast->next->next;
-            slow = slow->next;
-        }
-        ListNode* curr2 = slow->next;
-        slow->next = NULL;
-        // reversal 
         ListNode* prev = NULL;
-        ListNode* Next2 = NULL;
-        while(curr2!=NULL){
-            Next2 = curr2->next;
-            curr2->next = prev;
-            prev = curr2;
-            curr2 = Next2;
+        if(fast==NULL || fast->next==NULL)return;
+        while(fast!=NULL && fast->next!= NULL){
+            prev = slow;
+            slow = slow->next;
+            fast = fast->next->next;
         }
-        Next2 = NULL;
-        curr2 = prev;
-        ListNode* curr1 = head;
-        ListNode* Next1 = NULL;
-        while(curr2!=NULL){
-            Next2 = curr2->next;
-            Next1 = curr1->next;
-            curr2->next = curr1->next;
-            curr1->next = curr2;
-            curr2 = Next2;
-            curr1 = Next1;
+        prev->next = NULL;
+        ListNode* head1 = reverseLink(slow);
+        ListNode* temp1 = head1 ;
+        ListNode* temp = head;
+        while(temp->next!=NULL && temp1!=NULL){
+            ListNode* nxt = temp->next;
+            temp->next = temp1;
+            temp = temp->next;
+            temp1 = temp1->next;
+            temp->next = nxt;
+            temp = nxt;
         }
+        if(temp1!=NULL) temp->next = temp1;
     }
 };
