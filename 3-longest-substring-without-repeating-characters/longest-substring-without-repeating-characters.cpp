@@ -3,11 +3,9 @@ public:
     int lengthOfLongestSubstring(string s) {
         int i = 0;
         int j = 0;
-        int ans  = INT_MIN;
+        int ans  = 0;
         int n = s.size();
-        if(n==0)return 0;
         unordered_set<char>st;
-        int count = 0;
         while(j<n){
             while(st.find(s[j])!=st.end()){
                 st.erase(s[i++]);
