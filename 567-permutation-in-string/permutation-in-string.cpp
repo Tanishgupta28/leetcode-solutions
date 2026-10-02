@@ -27,6 +27,7 @@ public:
                 if(mp2[s2[i]]==0) mp2.erase(s2[i]);
                 i++;
                 j++;
+                if(j==m) break;
                 mp2[s2[j]]++;
             }
         }
