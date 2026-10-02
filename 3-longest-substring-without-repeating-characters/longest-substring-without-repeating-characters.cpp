@@ -9,19 +9,11 @@ public:
         unordered_set<char>st;
         int count = 0;
         while(j<n){
-            while(st.find(s[j])==st.end()){
-                st.insert(s[j]);
-                j++;
-                if(j>=n){
-                    ans = max(ans,(int)st.size());
-                    break;
-                }
-            }
-            ans = max((int)st.size(),ans);
             while(st.find(s[j])!=st.end()){
                 st.erase(s[i++]);
             }
             st.insert(s[j]);
+            ans = max((int)st.size(),ans);
             j++;
         }
         return ans;
