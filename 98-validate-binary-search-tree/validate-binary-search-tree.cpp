@@ -12,34 +12,18 @@
  */
 class Solution {
 public:
+    bool helper(TreeNode* root, long long low, long long high) {
+        if(root == NULL)
+            return true;
+
+        if(root->val <= low || root->val >= high)
+            return false;
+
+        return helper(root->left, low, root->val) &&
+               helper(root->right, root->val, high);
+    }
+
     bool isValidBST(TreeNode* root) {
-        TreeNode* prev = NULL;
-        bool flag = true;
-        while (root != NULL) {
-            if (root->left == NULL) {
-                if (prev != NULL && prev->val >= root->val) {
-                    flag = false;
-                }
-                prev = root;
-                root = root->right;
-            } else {
-                TreeNode* pred = root->left;
-                while (pred->right != NULL && pred->right != root) {
-                    pred = pred->right;
-                }
-                if (pred->right == NULL) {
-                    pred->right = root;
-                    root = root->left;
-                } else {
-                    pred->right = NULL;
-                    if (prev != NULL && prev->val >= root->val) {
-                        flag = false;
-                    }
-                    prev = root;
-                    root = root->right;
-                }
-            }
-        }
-        return flag;
+        return helper(root, LLONG_MIN, LLONG_MAX);
     }
 };
