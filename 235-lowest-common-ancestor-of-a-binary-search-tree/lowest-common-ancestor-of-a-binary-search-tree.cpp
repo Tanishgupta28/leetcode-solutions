@@ -10,22 +10,15 @@
 
 class Solution {
 public:
-bool find(TreeNode* root, TreeNode* p){
-    if(root==NULL) return false;
-    if(root == p) return true;
-    return find(root->left, p)|| find(root->right,p);
-}
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if(root==p) return p;
-        if(root==q) return q;
-        bool flag1 = find(root->left, p) && find(root->right,q);
-        bool flag2 = find(root->right, p) && find(root->left,q);
-        bool flag3 = find(root->right, p) && find(root->right,q);
-        bool flag4 = find(root->left, p) && find(root->left,q);
-        if(flag1 || flag2) return root;
-        else if(flag3){
+        if(root==NULL) return NULL;
+        if(root == p || root == q) return root;
+        if(p->val< root->val && q->val<root->val){
+            return lowestCommonAncestor(root->left, p, q);
+        }
+        if(p->val>root->val && q->val>root->val){
             return lowestCommonAncestor(root->right, p, q);
         }
-        else return lowestCommonAncestor(root->left, p, q);
+        return root;
     }
 };
