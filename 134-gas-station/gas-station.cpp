@@ -5,7 +5,7 @@ bool check(int curr, int idx, vector<int>& gas, vector<int>& cost, int n, int& i
     curr+=gas[idx%n];
     curr-=cost[idx%n];
     if(curr<0){
-        idx1 = idx;
+        idx1 = idx+1;
         return false;
     }
     return check(curr, idx+1, gas, cost, n, idx1);
@@ -16,10 +16,8 @@ bool check(int curr, int idx, vector<int>& gas, vector<int>& cost, int n, int& i
         int i  = 0;
         while(i<n){
             int curr = gas[i]-cost[i];//current balance
-            int idx = i;
             if(curr>=0){
                 if(check(curr, i+1, gas, cost, n, i)) return i;
-                if(i==idx) i++;
                 continue;
             }
             i++;
