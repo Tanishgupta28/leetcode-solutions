@@ -17,7 +17,6 @@ public:
                 if(groupSize>1)mp[hand[i]].push_back(1);
             }
         }
-        if(mp.size()==0) return true;
-        return false;
+        return mp.empty();
     }
 };
