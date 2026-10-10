@@ -8,6 +8,7 @@ void helper(vector<int>& candidates, int target, vector<vector<int>>&ans, vector
     }
     for(int i = idx ; i<candidates.size(); i++){
         if(i>idx && candidates[i]==candidates[i-1]) continue;
+        if(candidates[i]>target)break;
         temp.push_back(candidates[i]);
         helper(candidates, target-candidates[i], ans, temp,i+1);
         temp.pop_back();
