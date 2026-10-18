@@ -4,10 +4,10 @@ public:
         if(a==par[a]) return a;
         return par[a] = find(par[a], par); // path compression
     }
-    void uni(int a, int b, vector<int>&rank, vector<int>&par){
+    bool uni(int a, int b, vector<int>&rank, vector<int>&par){
         a = find(a, par);
         b = find(b, par);
-        if(a==b)return;
+        if(a==b)return false;
         if(rank[a]>=rank[b]){
             rank[a]+=rank[b];
             par[b] = a;
@@ -15,6 +15,7 @@ public:
             rank[b]+=rank[a];
             par[a] = b;
         }
+        return true;
     }
     int countComponents(int n, vector<vector<int>>& edges) {
         vector<int>par(n);
@@ -25,19 +26,14 @@ public:
         vector<int>rank(n,1); 
         // shows initial rank of veery node
         int m = edges.size();
+        int count = n;
         for(int i = 0 ; i<m ; i++){
             int a = edges[i][0];
             int b = edges[i][1];
-            uni(a,b,rank,par);
+            if(uni(a,b,rank,par)) count--;
         }
-        for(int i = 0 ; i<n ; i++){
-            find(i, par);
-        }
-        set<int>st;
-        for(int i = 0; i<n ; i++){
-            st.insert(par[i]);
-        }
-        return st.size();
+        
+        return count;
     }
 };
 
