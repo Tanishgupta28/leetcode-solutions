@@ -2,54 +2,26 @@ class Solution {
 public:
     int maximumScore(int a, int b, int c) {
         int ans = 0;
-        int count = 0;
-        if(a>0) count++;
-        if(b>0) count++;
-        if(c>0) count++;
-        while(count>1){
-            if(a>b && a>c){
-                a-=1;
-                if(a==0) count--;
-                if(b>=c){
-                    b-=1;
-                    if(b==0) count--;
-                }
-                else if(c>b){
-                    c-=1;
-                    if(c==0) count--;
-                }
-                ans++;
-                continue;
+
+        while ((a > 0) + (b > 0) + (c > 0) > 1) {
+            if (a >= b && a >= c) {
+                a--;
+                if (b >= c) b--;
+                else c--;
             }
-            if(b>a && b>c){
-                b-=1;
-                if(b==0) count--;
-                if(a>=c){
-                    a-=1;
-                    if(a==0) count--;
-                }
-                else if(c>a){
-                    c-=1;
-                    if(c==0) count--;
-                }
-                ans++;
-                continue;
+            else if (b >= a && b >= c) {
+                b--;
+                if (a >= c) a--;
+                else c--;
             }
-            if(c>b && c>a){
-                c-=1;
-                if(c==0) count--;
-                if(b>=a){
-                    b-=1;
-                    if(b==0) count--;
-                }
-                else if(a>b){
-                    a-=1;
-                    if(a==0) count--;
-                }
-                ans++;
-                continue;
+            else {
+                c--;
+                if (a >= b) a--;
+                else b--;
             }
+            ans++;
         }
+
         return ans;
     }
 };
