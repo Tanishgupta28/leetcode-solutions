@@ -1,34 +1,43 @@
 class Solution {
 public:
-    int numSubmatrixSumTarget(vector<vector<int>>& matrix, int target){
+    int numSubmatrixSumTarget(vector<vector<int>>& matrix, int target) {
         int n = matrix.size();
         int m = matrix[0].size();
-        vector<vector<int>>helper(n, vector<int>(m));
         int ans = 0;
-        int currRow = 0;
-        while(currRow<n){
-            vector<vector<int>>helper(n, vector<int>(m));
-            for(int j = 0; j<m; j++){
-                int sum = 0;
-                for(int i = currRow; i<n ;i++){
-                    sum+=matrix[i][j];
-                    helper[i][j] = sum;
+
+        for (int top = 0; top < n; top++) {
+
+            vector<int> colSum(m, 0);
+
+            for (int bottom = top; bottom < n; bottom++) {
+
+                // Compress rows into a 1D array
+                for (int j = 0; j < m; j++) {
+                    colSum[j] += matrix[bottom][j];
                 }
-            }
-            for(int i = currRow; i<n; i++){
-                int sum = 0;
-                unordered_map<int,int>mp;
+
+                // LeetCode 560 logic
+                unordered_map<int, int> mp;
                 mp[0] = 1;
-                for(int j = 0 ; j<m ; j++){
-                    sum+=helper[i][j];
-                    if(mp.count(sum-target)){
-                        ans+=mp[sum-target];
+
+                int sum = 0;
+
+                for (int j = 0; j < m; j++) {
+                    sum += colSum[j];
+
+                    if (mp.count(sum - target)) {
+                        ans += mp[sum - target];
                     }
+
                     mp[sum]++;
                 }
             }
-            currRow++;
         }
+
         return ans;
     }
 };
+
+
+
+// more optimal solution in which instead of using 2d matrix helper we use 1 d array 
