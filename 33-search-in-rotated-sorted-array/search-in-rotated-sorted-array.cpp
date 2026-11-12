@@ -10,12 +10,10 @@ public:
             if(nums[mid]>=nums[low]){
                 if(nums[mid]>target && nums[low]<=target) high = mid-1;
                 else low = mid+1;
-                // cout<<"cond 1"<<endl;
             }
-            else{
+            else if(nums[mid]<=nums[high]){
                 if(target>nums[mid] && target<=nums[high]) low = mid+1;
                 else high = mid-1;
-                // cout<<"cond 2"<<endl;
             }
         }
         return -1;
